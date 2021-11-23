@@ -1,0 +1,129 @@
+Table "user" {
+  "id" int(11) PK
+  "email" varchar(255) [default: NULL]
+  "password" varchar(255) [default: NULL]
+  "created_at" datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table "profile" {
+  "id" int(11) PK
+  "user_id" int(11) [not null]
+  "avatar_id" int(11)
+  "address_id" int(11)
+  "nickname" varchar(255) [default: NULL]
+  "bio" text
+  "created_at" datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table "interests" {
+  "id" int(11) PK
+  "title" int(11) [not null]
+  "created_at" datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table "user_interests" {
+  "id" int(11) PK
+  "user_id" int(11) [not null]
+  "interest_id" int(11) [not null]
+  "created_at" datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table "address" {
+  "id" int(11) PK
+  "address" text
+  "created_at" datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Enum media_types {
+  image
+  video
+}
+
+Table "media" {
+  "id" int(11) PK
+  "title" varchar(255) [default: NULL]
+  "type" media_types
+  "description" text
+  "path" varchar(255) [default: NULL]
+  "created_at" datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table "gallery" {
+  "id" int(11) PK
+  "title" varchar(255) [default: NULL]
+  "description" text
+  "user_id" int(11) [not null]
+  "media_id" int(11) [not null]
+  "created_at" datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table "fish" {
+  "id" int(11) PK
+  "user_id" int(11) [not null]
+  "target_id" int(11) [not null]
+  "geolocation" text
+  "created_at" datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Enum match_status {
+  meet
+  ignore
+  like
+  match
+  unmatch
+}
+
+Table "match" {
+  "id" int(11) PK
+  "fish_id" int(11) [not null]
+  "status" match_status  [not null, default: `meet`]
+  "created_at" datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table "messages" {
+  "id" int(11) PK
+  "user_id" int(11) [not null]
+  "target_id" int(11) [not null]
+  "message" text
+  "created_at" datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Table "avatar" {
+  "id" int(11) PK
+  "title" varchar(255) [default: NULL]
+  "description" text
+  "media_id" int(11) [not null]
+  "created_at" datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Enum pay_types {
+  creditcard
+  debitcart
+  paypal
+  pix
+  other
+}
+
+Table "payment" {
+  "id" int(11) PK
+  "user_id" int(11) [not null]
+  "pay_date"  datetime [not null, default: `CURRENT_TIMESTAMP`]
+  "pay_type" pay_types
+  "value" float(10,2)
+  "created_at" datetime [not null, default: `CURRENT_TIMESTAMP`]
+}
+
+Ref:"user"."id" < "profile"."user_id"
+Ref:"user"."id" < "user_interests"."user_id"
+Ref:"interests"."id" < "user_interests"."interest_id"
+Ref:"address"."id" < "profile"."address_id"
+Ref:"user"."id" < "gallery"."user_id"
+Ref:"media"."id" < "gallery"."media_id"
+Ref:"user"."id" < "fish"."user_id"
+Ref:"user"."id" < "fish"."target_id"
+Ref:"fish"."id" < "match"."fish_id"
+Ref:"user"."id" < "messages"."user_id"
+Ref:"user"."id" < "messages"."target_id"
+Ref:"media"."id" < "avatar"."media_id"
+Ref:"avatar"."id" < "profile"."avatar_id"
+Ref:"user"."id" < "payment"."user_id"
