@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+  node:
+    image: 'node:12.19.1'
+    volumes:
+      - ../:/var/www
+    command: tail -f /dev/null
+    ports:
+      - 9800:9800
+    networks:
+      - phishy_net
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "Postgres2021!"
+    ports:
+      - "15432:5432"
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data 
+    networks:
+      - phishy_net
+
+networks:
+  phishy_net:
+    driver: bridge
