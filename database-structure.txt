@@ -1,0 +1,92 @@
+- user
+	- id
+	- email
+	- username
+	- password
+
+- profile
+	- id
+	- user_id
+	- avatar_id
+	- address_id
+	- nickname
+	- bio
+	- created_at
+
+- interests
+	- id
+	- title
+	- created_at
+
+- user_interests
+	- id
+	- user_id
+	- interest_id
+	- created_at
+
+- address
+	- id
+	- address
+	- created_at
+
+- gallery
+	- id
+	- title
+	- description
+	- user_id
+	- media_id
+	- created_at
+
+- media
+	- id
+	- title
+	- type
+	- user_id
+	- description
+	- path
+	- created_at
+
+- fish
+	- id
+	- user_id
+	- target_id
+	- geolocation
+	- created_at
+
+- match
+	- id
+	- user_id
+	- target_id
+	- status ('meet', 'ignore', 'like', 'match', 'unmatch')
+	- created_at
+
+- messages
+	- id
+	- user_id
+	- target_id
+	- message
+	- created_at
+
+- product
+	- id
+	- title
+	- description
+	- value
+	- start_date
+	- expiration_date
+	- discount
+	- created_at
+
+- payment
+	- id
+	- user_id
+	- payment_date
+	- payment_type
+	- payment_value
+	- created_at
+
+- avatar
+	- id
+	- title
+	- description
+	- created_at
